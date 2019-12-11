@@ -1,4 +1,4 @@
-#include "dbscan.h"
+#include "../include/dbscan.h"
 
 int gdbscan(thrust::host_vector<real> &xdata, thrust::host_vector<real> &ydata,
 	    real eps, unsigned int min, thrust::host_vector<uint> &cluster, thrust::host_vector<uint> &index)
@@ -198,6 +198,6 @@ int print_cluster(thrust::host_vector<uint> &cluster, thrust::host_vector<uint> 
   
   //for(uint i = 0; i < size; ++i) printf("%d\n", cluster[start+i]);  
   //printf("\n");
-       
+
   return EXIT_SUCCESS;
 }

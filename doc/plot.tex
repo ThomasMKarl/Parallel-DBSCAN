@@ -66,12 +66,13 @@
 
 \begin{document}
 
+\maketitle
 
 \begin{figure}
   \centering
   \begin{tikzpicture}[scale=1.5]
     \begin{axis}[xlabel={$x$}, ylabel={$y$}, legend pos=outer north east, legend style={cells={align=left}}]
-    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{cluster.dat};
+    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{../test/cluster.dat};
     \end{axis}
   \end{tikzpicture}
   \caption{Four different clusters sampled randomly via gaussian mixture models. Each cluster consists of 250 two-dimensional points.}
@@ -83,8 +84,8 @@
   \begin{subfigure}[c]{0.45\textwidth}
   \begin{tikzpicture}[scale=.9]
     \begin{axis}[xlabel={$x$}, ylabel={$y$}, legend pos=outer north east, legend style={cells={align=left}}]
-    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{cluster.dat};
-    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{outlier_1.5_150.dat};
+    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{../test/cluster.dat};
+    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{../test/outlier_1.5_150.dat};
     \end{axis}
   \end{tikzpicture}
   \subcaption{minimum cluster size: 150; $\varepsilon = 1.5$}
@@ -93,8 +94,8 @@
   \begin{subfigure}[c]{0.45\textwidth}
   \begin{tikzpicture}[scale=.9]
     \begin{axis}[xlabel={$x$}, ylabel={$y$}, legend pos=outer north east, legend style={cells={align=left}}]
-    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{cluster.dat};
-    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{outlier_1.5_200.dat};
+    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{../test/cluster.dat};
+    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{../test/outlier_1.5_200.dat};
     \end{axis}
   \end{tikzpicture}
   \subcaption{minimum cluster size: 200; $\varepsilon = 1.5$}
@@ -103,8 +104,8 @@
   \begin{subfigure}[c]{0.45\textwidth}  
   \begin{tikzpicture}[scale=.9]
     \begin{axis}[xlabel={$x$}, ylabel={$y$}, legend pos=outer north east, legend style={cells={align=left}}]
-    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{cluster.dat};
-    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{outlier_2.5_150.dat};
+    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{../test/cluster.dat};
+    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{../test/outlier_2.5_150.dat};
     \end{axis}
   \end{tikzpicture}
   \subcaption{minimum cluster size: 150; $\varepsilon = 2.5$}
@@ -113,8 +114,8 @@
   \begin{subfigure}[c]{0.45\textwidth}  
   \begin{tikzpicture}[scale=.9]
     \begin{axis}[xlabel={$x$}, ylabel={$y$}, legend pos=outer north east, legend style={cells={align=left}}]
-    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{cluster.dat};
-    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{outlier_2.5_200.dat};
+    \addplot [draw=gray!50!black, mark=*, mark size=1.0pt, only marks, fill=gray!50!white] table{../test/cluster.dat};
+    \addplot [draw=red!50!black,  mark=*, mark size=1.0pt, only marks, fill=red!50!white ] table{../test/outlier_2.5_200.dat};
     \end{axis}
   \end{tikzpicture}
   \subcaption{minimum cluster size: 200; $\varepsilon = 2.5$}
