@@ -31,7 +31,8 @@ uninstall:
 	rm /usr/lib/libdbscan.so.1
 	rm /usr/lib/libdbscand.so.1
 
-test: include/dbscan.h src/dbscan.cu src/main.cpp
+test: lib include/dbscan.h src/dbscan.cu src/main.cpp
+	mkdir bin
 	$(CXX) src/main.cpp $(LDFLAGS) $(CULIB) $(CFLAGS) -DPRECISION=float  -o bin/dbscan -ldbscan
 	$(CXX) src/main.cpp $(LDFLAGS) $(CULIB) $(CFLAGS) -DPRECISION=double -o bin/dbscan_d -ldbscand
 	bin/dbscan test/cluster.dat 1.5 150 > test/outlier_1.5_150.dat
@@ -39,7 +40,7 @@ test: include/dbscan.h src/dbscan.cu src/main.cpp
 	bin/dbscan test/cluster.dat 1.5 200 > test/outlier_1.5_200.dat
 	bin/dbscan test/cluster.dat 2.5 200 > test/outlier_2.5_200.dat
 
-doc: doc/Doxyfile include/dbscan.h src/dbscan.cu src/main.cpp
+doc: doc/Doxyfile include/dbscan.h src/dbscan.cu src/main.cpp test
 	make test
 	doxygen doc/Doxyfile
 

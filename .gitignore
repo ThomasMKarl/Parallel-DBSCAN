@@ -1,0 +1,8 @@
+test/outlier_1.5_150.dat
+test/outlier_1.5_200.dat
+test/outlier_2.5_150.dat
+test/outlier_2.5_200.dat
+bin/
+doc/html/
+doc/latex/
+lib/
