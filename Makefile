@@ -11,6 +11,7 @@ CULIB=-L/usr/local/cuda/lib64
 THRUSTINC=-I/usr/local/cuda/include
 
 lib: include/dbscan.h src/dbscan.cu
+	mkdir lib
 	$(NVCC) $(THRUSTINC) src/dbscan.cu -c $(NFLAGS) -Xcompiler "$(CFLAGS)" -DPRECISION=float   -DBLOCK_SIZE=$(BLOCKSIZE) --compiler-options '-fPIC' --shared -o lib/libdbscan.so.1
 	ln -rs lib/libdbscan.so.1 lib/libdbscan.so
 	$(NVCC) $(THRUSTINC) src/dbscan.cu -c $(NFLAGS) -Xcompiler "$(CFLAGS)" -DPRECISION=double  -DBLOCK_SIZE=$(BLOCKSIZE) --compiler-options '-fPIC' --shared -o lib/libdbscand.so.1
