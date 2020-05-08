@@ -26,7 +26,7 @@
 #include<cmath>
 
 #ifndef BLOCK_SIZE
-#define BLOCK_SIZE 192
+#define BLOCK_SIZE 265
 #endif
 
 #ifndef PRECISION
@@ -53,8 +53,8 @@ int cuda_gdbscan(thrust::device_vector<real>&, thrust::device_vector<real>&, rea
  *
  * @param xdata contains coordinates in x-direction
  * @param ydata contains coordinates in y-direction
- * @param searches for cluster point in $\varepsilon$ environment
- * @param minimum size of clusters
+ * @param eps searches for cluster point in $\varepsilon$ environment
+ * @param min minimum size of clusters
  * @param cluster contains indices of all clusters after run
  * @param cluster_start contains starting indices of clusters in cluster vector after run
  * @return returns 0 if run succsessfull, -1 otherwise
