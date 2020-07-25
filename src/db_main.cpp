@@ -1,4 +1,4 @@
-#include "../include/dbscan.h"
+#include "dbscan.h"
 
 int main(int argc, char *argv[])
 {

@@ -1,4 +1,4 @@
-#include "../include/dbscan.h"
+#include "dbscan.h"
 
 int gdbscan(thrust::host_vector<real> &xdata, thrust::host_vector<real> &ydata,
 	    real eps, unsigned int min, thrust::host_vector<uint> &cluster, thrust::host_vector<uint> &index)

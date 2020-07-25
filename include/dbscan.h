@@ -1,8 +1,6 @@
 /**
  * @file Header file containing function definitions.
- * Defines DBSCAN_H if included.
  * Defines BLOCK_SIZE 265 if unset.
- * Defines PRECISION float if unset. 
  * 
  * @author (last to touch it) $Author: bv $
  *
@@ -14,8 +12,7 @@
  *
  * Created on: Fr Nov 29 00:39:23 2019
  */
-#ifndef DBSCAN_H
-#define DBSCAN_H
+#pragma once
 
 #include<thrust/host_vector.h>
 #include<thrust/device_vector.h>
@@ -132,5 +129,3 @@ int print_outlier(thrust::host_vector<uint>&, thrust::host_vector<real>&, thrust
  * @return returns 0 if run succsessfull, -1 otherwise
  */
 int print_cluster(thrust::host_vector<uint>&, thrust::host_vector<uint>&, uint, uint, thrust::host_vector<uint>&);
-
-#endif //DBSCAN_H
