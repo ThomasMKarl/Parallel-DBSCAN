@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
       outliers) != EXIT_SUCCESS) return EXIT_FAILURE;
   }
 
-  printf("There are %ld outliers and %ld clusters.\n", outliers.size(), cluster_start.size()-outliers.size());
+  printf("#There are %ld outliers and %ld clusters.\n", outliers.size(), cluster_start.size()-outliers.size());
 
   if(print_outlier(outliers, xdata, ydata) != EXIT_SUCCESS)
     return EXIT_FAILURE;

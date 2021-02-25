@@ -1,7 +1,11 @@
 #include "dbscan.h"
 
-int gdbscan(thrust::host_vector<real> &xdata, thrust::host_vector<real> &ydata,
-	    real eps, unsigned int min, thrust::host_vector<uint> &cluster, thrust::host_vector<uint> &index)
+int gdbscan(thrust::host_vector<real> &xdata,
+	    thrust::host_vector<real> &ydata,
+	    real eps,
+	    unsigned int min,
+	    thrust::host_vector<uint> &cluster,
+	    thrust::host_vector<uint> &index)
 {
   uint N = xdata.size();
   if(N != ydata.size())
@@ -56,8 +60,12 @@ int gdbscan(thrust::host_vector<real> &xdata, thrust::host_vector<real> &ydata,
   return EXIT_SUCCESS;
 }
 
-int cuda_gdbscan(thrust::device_vector<real> &xdata, thrust::device_vector<real> &ydata,
-		 real eps, unsigned int min, thrust::device_vector<uint> &cluster, thrust::device_vector<uint> &index)
+int cuda_gdbscan(thrust::device_vector<real> &xdata,
+		 thrust::device_vector<real> &ydata,
+		 real eps,
+		 unsigned int min,
+		 thrust::device_vector<uint> &cluster,
+		 thrust::device_vector<uint> &index)
 {
   uint N = xdata.size();
   if(N != ydata.size())
@@ -72,16 +80,24 @@ int cuda_gdbscan(thrust::device_vector<real> &xdata, thrust::device_vector<real>
   unsigned int threads_per_block = (N + BLOCK_SIZE -1) / BLOCK_SIZE;
 
   vertex_kernel<<<BLOCK_SIZE, threads_per_block, 0>>>
-                 (eps, min, thrust::raw_pointer_cast(size.data()),
-		  thrust::raw_pointer_cast(xdata.data()), thrust::raw_pointer_cast(ydata.data()), N);
+                 (eps,
+		  min,
+		  thrust::raw_pointer_cast(size.data()),
+		  thrust::raw_pointer_cast(xdata.data()),
+		  thrust::raw_pointer_cast(ydata.data()), N);
   if(cudaDeviceSynchronize() != cudaSuccess) return EXIT_FAILURE;
 
   thrust::exclusive_scan(thrust::device, size.begin(), size.end(), index.begin());
 
   cluster.resize(size[N-1]+index[N-1]);
   cluster_kernel<<<BLOCK_SIZE, threads_per_block, 0>>>
-                  (eps, min, thrust::raw_pointer_cast(size.data()), thrust::raw_pointer_cast(index.data()), thrust::raw_pointer_cast(cluster.data()),
-		   thrust::raw_pointer_cast(xdata.data()), thrust::raw_pointer_cast(ydata.data()), N);
+                  (eps,
+		   min,
+		   thrust::raw_pointer_cast(size.data()),
+		   thrust::raw_pointer_cast(index.data()),
+		   thrust::raw_pointer_cast(cluster.data()),
+		   thrust::raw_pointer_cast(xdata.data()),
+		   thrust::raw_pointer_cast(ydata.data()), N);
   if(cudaDeviceSynchronize() != cudaSuccess) return EXIT_FAILURE;
 
   return EXIT_SUCCESS;
@@ -195,9 +211,6 @@ int print_cluster(thrust::host_vector<uint> &cluster, thrust::host_vector<uint> 
     outlier.push_back(n);
     return EXIT_SUCCESS;
   }
-  
-  //for(uint i = 0; i < size; ++i) printf("%d\n", cluster[start+i]);  
-  //printf("\n");
 
   return EXIT_SUCCESS;
 }

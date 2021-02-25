@@ -4,9 +4,9 @@
  * 
  * @author (last to touch it) $Author: bv $
  *
- * @version $Revision: 1.0 $
+ * @version $Revision: 1.1 $
  *
- * @date $Date: 2019/11/29 $
+ * @date $Date: 2021/02/24 $
  *
  * Contact: Thomas.Karl@ur.de
  *
@@ -32,6 +32,7 @@
 
 typedef PRECISION real;
 
+
 /**
  * @brief Performs a G-DBSCAN of two dimensional input data.
  *
@@ -40,10 +41,15 @@ typedef PRECISION real;
  * @param eps searches for cluster point in $\varepsilon$ environment
  * @param min minimum size of clusters
  * @param cluster contains indices of all clusters after run
- * @param cluster_start contains starting indices of clusters in cluster vector after run
+ * @param index contains starting indices of clusters in cluster vector after run
  * @return returns 0 if run succsessfull, -1 otherwise
  */
-int cuda_gdbscan(thrust::device_vector<real>&, thrust::device_vector<real>&, real, unsigned int, thrust::device_vector<uint>&, thrust::device_vector<uint>&);
+int cuda_gdbscan(thrust::device_vector<real> &xdata,
+		 thrust::device_vector<real> &ydata,
+		 real eps,
+		 unsigned int min,
+		 thrust::device_vector<uint> &cluster,
+		 thrust::device_vector<uint> &index);
 
 /**
  * @brief Performs a G-DBSCAN of two dimensional input data.
@@ -56,7 +62,12 @@ int cuda_gdbscan(thrust::device_vector<real>&, thrust::device_vector<real>&, rea
  * @param cluster_start contains starting indices of clusters in cluster vector after run
  * @return returns 0 if run succsessfull, -1 otherwise
  */
-int gdbscan(thrust::device_vector<real>&, thrust::device_vector<real>&, real, unsigned int, thrust::device_vector<uint>&, thrust::device_vector<uint>&);
+int gdbscan(thrust::device_vector<real>& xdata,
+	    thrust::device_vector<real>& ydata,
+	    real eps,
+	    unsigned int min,
+	    thrust::device_vector<uint>& cluster,
+	    thrust::device_vector<uint>& cluster_start);
 
 /**
  * @brief CUDA kernel to search for cluster sizes.
@@ -68,7 +79,12 @@ int gdbscan(thrust::device_vector<real>&, thrust::device_vector<real>&, real, un
  * @param ydata contains coordinates in y-direction
  * @param N size of the data set
  */
-__global__ void vertex_kernel( real, uint, uint*,               real*, real*, uint);
+__global__ void vertex_kernel(real eps,
+			      uint min,
+			      uint* size,
+			      real* xdata,
+			      real* ydata,
+			      uint N);
 
 /**
  * @brief CUDA kernel to store the indices of clusters.
@@ -82,20 +98,27 @@ __global__ void vertex_kernel( real, uint, uint*,               real*, real*, ui
  * @param ydata contains coordinates in y-direction
  * @param N size of the data set
  */
-__global__ void cluster_kernel(real, uint, uint*, uint*, uint*, real*, real*, uint);
+__global__ void cluster_kernel(real eps,
+			       uint min,
+			       uint* size,
+			       uint* cluster_start,
+			       uint* cluster,
+			       real* xdata,
+			       real* ydata,
+			       uint N);
 
 /**
  * @brief Reads two dimensional data from file.
  *
  * @param filename Name of the file containing the data. The file must store the x and y coordinates 
  * in each row seperated by whitespaces or tabulators. 
- * @param cluster contains indices of all clusters
- * @param cluster_start contains starting indices of clusters in cluster vector
  * @param xdata contains coordinates in x-direction after run
  * @param ydata contains coordinates in y-direction after run
  * @return returns 0 if run succsessfull, -1 otherwise
  */
-int read_data(std::string, thrust::host_vector<real>&, thrust::host_vector<real>&);
+int read_data(std::string filename,
+	      thrust::host_vector<real>& xdata,
+	      thrust::host_vector<real>& ydata);
 
 /**
  * @brief Sends start points of clusters in cluster_start to standard output
@@ -103,7 +126,7 @@ int read_data(std::string, thrust::host_vector<real>&, thrust::host_vector<real>
  * @param cluster_start contains starting indices of clusters 
  * @return returns 0 if run succsessfull, -1 otherwise
  */
-int print_table(thrust::host_vector<uint>&);
+int print_table(thrust::host_vector<uint>& cluster_start);
 
 /**
  * @brief Sends outlier coordinates to standard output
@@ -113,7 +136,9 @@ int print_table(thrust::host_vector<uint>&);
  * @param ydata contains coordinates in y-direction 
  * @return returns 0 if run succsessfull, -1 otherwise
  */
-int print_outlier(thrust::host_vector<uint>&, thrust::host_vector<real>&, thrust::host_vector<real>&);
+int print_outlier(thrust::host_vector<uint>& outliers,
+		  thrust::host_vector<real>& xdata,
+		  thrust::host_vector<real>& ydata);
 
 /**
  * @brief Sends cluster indices to standard output
@@ -128,4 +153,8 @@ int print_outlier(thrust::host_vector<uint>&, thrust::host_vector<real>&, thrust
  * @param outliers gets filled with indices of otliers
  * @return returns 0 if run succsessfull, -1 otherwise
  */
-int print_cluster(thrust::host_vector<uint>&, thrust::host_vector<uint>&, uint, uint, thrust::host_vector<uint>&);
+int print_cluster(thrust::host_vector<uint>& cluster,
+		  thrust::host_vector<uint>& cluster_start,
+		  uint n,
+		  uint min,
+		  thrust::host_vector<uint>& outliers);

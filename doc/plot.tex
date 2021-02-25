@@ -2,7 +2,6 @@
 \usepackage{scrlayer-scrpage}
 \usepackage{mwe}
 
-\DeclareMathSizes{18}{18}{18}{18}
 \usepackage{float}
 \usepackage{upgreek}
 \usepackage{color}
@@ -26,12 +25,7 @@
 \usepackage{siunitx}
 \usepackage{pgfplots}
 \usepackage{tikz}
-\usepackage{tocstyle}
-\newtocstyle[KOMAlike][leaders]{alldotted}{}
-\usetocstyle{alldotted}
-\usepackage[absolute]{textpos}
 
-\usepackage[origlayout=true,automark,colors={rz}]{URpagestyles}
 \parskip=1\baselineskip
 \parindent = 0pt
 
@@ -40,33 +34,15 @@
             linkcolor=black,
             urlcolor=UR@color@10,
             citecolor=UR@color@10]{hyperref}
-
-\renewcommand*{\familydefault}{\sfdefault}
-\newcommand*{\pck}[1]{\texttt{#1}}
-\newcommand*{\code}[1]{\texttt{#1}}
-\newcommand*{\repl}[1]{\textrm{\textit{#1}}}
-\newcommand{\cmd}[1]{\par\medskip\noindent\fbox{\ttfamily#1}\par\medskip\noindent}
-\setcounter{secnumdepth}{\sectionnumdepth}
-\newsavebox{\remarkbox}
-\sbox{\remarkbox}{\emph{Anmerkung:~}}
-\newcounter{iterator}
-\usepackage{colortbl}
             
 \cfoot*{\thepage\ of \pageref{LastPage}}% the pagenumber in the center of the foot, also on plain pages
 \ihead*{ }% Name and title beneath each other in the inner part of the foot
 \ohead*{\headmark}
 \automark[subsection]{section}
 
-\title{Machine Learning}
-\subtitle{}
-\date{\today}
-\author{Thomas Karl}
-
-\renewcommand{\titlepagestyle}{URtitle} 
+\pagestyle{empty}
 
 \begin{document}
-
-\maketitle
 
 \begin{figure}
   \centering

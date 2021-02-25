@@ -8,3 +8,4 @@ bin/
 doc/html/
 doc/latex/
 lib/
+test/kmeans.dat

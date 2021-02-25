@@ -30,15 +30,6 @@ int main(int argc, char *argv[])
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   
   std::cout << "finished after " << iter << " iterations...\n";
-  for(size_t i = 0; i < h_xcentroids.size(); ++i)
-  {
-    std::cout << "#" << h_xcentroids[i] << " " << h_ycentroids[i] << "\n";
-  }
-
-  for(size_t i = 0; i < h_xdata.size(); ++i)
-  {
-    //std::cout << h_xdata[i] << " " << h_ydata[i] << "\n";
-  }
 
   return EXIT_SUCCESS;
 }

@@ -33,30 +33,16 @@
 #include<thrust/count.h>
 #include<thrust/execution_policy.h>
 
-/**
- * @brief Performs a G-DBSCAN of two dimensional input data.
- *
- * @param xdata contains coordinates in x-direction
- * @param ydata contains coordinates in y-direction
- * @param eps searches for cluster point in $\varepsilon$ environment
- * @param min minimum size of clusters
- * @param cluster contains indices of all clusters after run
- * @param cluster_start contains starting indices of clusters in cluster vector after run
- * @return returns 0 if run succsessfull, -1 otherwise
- */
+#ifndef BLOCK_SIZE
+#define BLOCK_SIZE 265
+#endif
+
+
 template<typename T>
 __global__ void get_cluster(T *xdata,
 			    T *xcentroids,
 			    T *ydata,
 			    T *ycentroids,
-			    size_t c,
-			    size_t *cluster,
-			    size_t N);
-
-__global__ void get_cluster(double *xdata,
-			    double *xcentroids,
-			    double *ydata,
-			    double *ycentroids,
 			    size_t c,
 			    size_t *cluster,
 			    size_t N);
