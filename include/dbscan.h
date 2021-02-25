@@ -38,7 +38,7 @@ typedef PRECISION real;
  *
  * @param xdata contains coordinates in x-direction
  * @param ydata contains coordinates in y-direction
- * @param eps searches for cluster point in $\varepsilon$ environment
+ * @param eps searches for cluster point in \f$\varepsilon\f$ environment
  * @param min minimum size of clusters
  * @param cluster contains indices of all clusters after run
  * @param index contains starting indices of clusters in cluster vector after run
@@ -56,7 +56,7 @@ int cuda_gdbscan(thrust::device_vector<real> &xdata,
  *
  * @param xdata contains coordinates in x-direction
  * @param ydata contains coordinates in y-direction
- * @param eps searches for cluster point in $\varepsilon$ environment
+ * @param eps searches for cluster point in \f$\varepsilon\f$ environment
  * @param min minimum size of clusters
  * @param cluster contains indices of all clusters after run
  * @param cluster_start contains starting indices of clusters in cluster vector after run
@@ -72,7 +72,7 @@ int gdbscan(thrust::device_vector<real>& xdata,
 /**
  * @brief CUDA kernel to search for cluster sizes.
  *
- * @param eps searches for cluster point in $\varepsilon$ environment
+ * @param eps searches for cluster point in \f$\varepsilon\f$ environment
  * @param min minimum size of clusters
  * @param size contains the sizes of each cluster after run, size is set to zero if smaller than min
  * @param xdata contains coordinates in x-direction
@@ -89,7 +89,7 @@ __global__ void vertex_kernel(real eps,
 /**
  * @brief CUDA kernel to store the indices of clusters.
  *
- * @param eps searches for cluster point in $\varepsilon$ environment
+ * @param eps searches for cluster point in \f$\varepsilon\f$ environment
  * @param min minimum size of clusters
  * @param size contains the sizes of each cluster
  * @param cluster_start contains starting indices of clusters in cluster array after run
