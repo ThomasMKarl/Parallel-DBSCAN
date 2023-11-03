@@ -1,4 +1,4 @@
-#include "kmeans.h"
+#include "kmeans.hpp"
 
 int main(int argc, char *argv[])
 {

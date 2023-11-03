@@ -1,4 +1,4 @@
-#include "kmeans.h"
+#include "kmeans.hpp"
 
 template<typename T>
 __global__ void get_cluster(T *xdata,

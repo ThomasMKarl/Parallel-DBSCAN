@@ -1,30 +1,38 @@
-VERSION = 1.01
+VERSION=1.01
 
 CXX=g++
-CFLAGS=-Wall -Wextra -std=c++14
+CFLAGS=-Wall -Wextra -std=c++17
 LDFLAGS=-L lib/ -lcudart
 
 NVCC=nvcc
 BLOCKSIZE=256
-NFLAGS=-arch=compute_61 -code=sm_61 -O3 -std=c++14
+NFLAGS=-arch=compute_61 -code=sm_61 -O3 -std=c++17
 CULIB=-L/usr/local/cuda/lib64
 THRUSTINC=-I/usr/local/cuda/include
 
-lib: include/dbscan.h src/dbscan.cu include/kmeans.h src/kmeans.cu
-	mkdir -p lib
+
+all: bin 
+
+
+lib: lib/libdbscan.so lib/libkmeans.so
+	
+lib/libdbscan.so: src/dbscan.cu
 	$(NVCC) $(THRUSTINC) -I include/ src/dbscan.cu -c $(NFLAGS) -Xcompiler "$(CFLAGS)" -DBLOCK_SIZE=$(BLOCKSIZE) --compiler-options '-fPIC' --shared -o lib/libdbscan.so
+
+lib/libkmeans.so: src/kmeans.cu
 	$(NVCC) $(THRUSTINC) -I include/ src/kmeans.cu -c $(NFLAGS) -Xcompiler "$(CFLAGS)" -DBLOCK_SIZE=$(BLOCKSIZE) --compiler-options '-fPIC' --shared -o lib/libkmeans.so
 
 
-.PHONY: bin
-bin:
-	make lib
-	mkdir -p bin
+bin: bin/dbscan bin/kmeans
+
+bin/dbscan: lib/libdbscan.so src/db_main.cpp
 	$(CXX) -I include/ src/db_main.cpp $(LDFLAGS) $(CULIB) $(CFLAGS) -o bin/dbscan -ldbscan
+
+bin/kmeans: lib/libkmeans.so src/km_main.cpp
 	$(CXX) -I include/ src/km_main.cpp $(LDFLAGS) $(CULIB) $(CFLAGS) -o bin/kmeans -lkmeans
 
-install: include/dbscan.h bin/dbscan lib/libdbscan.so.1 lib/libdbscand.so.1 include/kmeans.h bin/kmeans lib/libkmeans.so.1 lib/libkmeans.so.1
-	make lib
+
+install: lib
 	cp include/dbscan.h /usr/include
 	cp include/kmeans.h /usr/include
 	cp lib/libdbscan.so.1  /usr/lib
@@ -42,16 +50,15 @@ uninstall:
 
 
 .PHONY: test
-test: lib include/dbscan.h src/dbscan.cu src/db_main.cpp include/kmeans.h src/kmeans.cu src/km_main.cpp
-	make bin
-	bin/dbscan test/cluster.dat 1.5 150 > test/outlier_1.5_150.dat
-	bin/dbscan test/cluster.dat 2.5 150 > test/outlier_2.5_150.dat
-	bin/dbscan test/cluster.dat 1.5 200 > test/outlier_1.5_200.dat
-	bin/dbscan test/cluster.dat 2.5 200 > test/outlier_2.5_200.dat
-	#bin/kmeans test/cluster.dat 4 500 > test/kmeans.dat
+test: bin
+	bin/dbscan test/cluster.dat 1.5 150 2 1000 > test/outlier_1.5_150.dat
+	bin/dbscan test/cluster.dat 2.5 150 2 1000 > test/outlier_2.5_150.dat
+	bin/dbscan test/cluster.dat 1.5 200 2 1000 > test/outlier_1.5_200.dat
+	bin/dbscan test/cluster.dat 2.5 200 2 1000 > test/outlier_2.5_200.dat
+	bin/kmeans test/cluster.dat 4 500 > test/kmeans.dat
 
 .PHONY: doc
-doc: doc/Doxyfile include/dbscan.h src/dbscan.cu src/db_main.cpp include/kmeans.h src/kmeans.cu src/km_main.cpp
+doc:
 	doxygen doc/Doxyfile
 
 .PHONY: clean
